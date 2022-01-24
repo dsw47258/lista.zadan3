@@ -3,44 +3,31 @@ package zad2;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class zad3kolekcje {
-    public static void main (String[] args) throws FileNotFoundException {
-        FileReader fr = new FileReader("NEXT.txt");
-        Scanner scan = new Scanner(fr);
+    public static void main(String[] args) throws FileNotFoundException {
+        FileReader readFile = new FileReader("NEXT.txt");
+        Scanner scan = new Scanner(readFile);
         ArrayList<String> lines = new ArrayList<>();
+        ArrayList<String> resultLines = new ArrayList<>();
 
-        boolean correct = false;
-        int i = 1;
         while (scan.hasNextLine()) {
             lines.add(scan.nextLine());
-            i++;
         }
-
-            for (String line: lines){
-                char [] charLines = line.toCharArray();
-                int first = 0;
-                int second = 0;
-
-                for (char symbol:charLines){
-                    second = first;
-                    first = symbol;
-
-                    if(second > first){
-                        correct = false;
-                        break;
-                    }
-                    else
-                        correct = true;
-                }
-
-                if(correct) {
-                    System.out.println(line);
-                }
-                else
-                    continue;
+        for (String line : lines) {
+            if (line.equals(transferredAndResult(line))) {
+                resultLines.add(line);
             }
         }
-
+        System.out.println("Napisy roznące: " + resultLines);
     }
+
+    private static String transferredAndResult(String line) {
+        char[] charArray = line.toCharArray();
+        Arrays.sort(charArray);
+        return new String(charArray);
+    }
+
+}
